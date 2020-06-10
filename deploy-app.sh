@@ -8,7 +8,7 @@ fi
 
 APPLICATION=$1
 CLOUDFIER_USER=${2:-test}
-BASE_APPLICATION_PATH=${4:-/cloudfier-examples/}
+BASE_APPLICATION_PATH=${3:-/cloudfier-examples/}
 
 echo
 echo 

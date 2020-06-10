@@ -10,18 +10,19 @@ PLATFORM=$1
 APPLICATION=$2
 CLOUDFIER_USER=${3:-test}
 BASE_APPLICATION_PATH=${4:-/cloudfier-examples/}
+BASE_GENERATION_PATH=${5:-$PLATFORM/$APPLICATION/gen}
 APPLICATION_URL=$CLOUDFIER_URL/services/generator/$CLOUDFIER_USER${BASE_APPLICATION_PATH//\//-}$APPLICATION
 GENERATION_URL=$APPLICATION_URL/platform/$PLATFORM
 
 echo "*** Generating $APPLICATION on $PLATFORM (served by $GENERATION_URL)"
 
-rm -Rf generated.zip
 wget -v -d  $GENERATION_URL --header "Accept: application/zip" -O generated.zip
 if [ $? -ne 0 ] ; then 
     exit 1
 fi
-find $PLATFORM/$APPLICATION/gen/ -type f -not -name '.project' | xargs rm -Rf 
-mkdir -p $PLATFORM/$APPLICATION/gen
-unzip -o -d $PLATFORM/$APPLICATION/gen generated.zip
+find $BASE_GENERATION_PATH -type f -not -name '.project' | xargs rm -Rf 
+mkdir -p $BASE_GENERATION_PATH
+unzip -o -d $BASE_GENERATION_PATH generated.zip
+rm -Rf generated.zip
 
 
